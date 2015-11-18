@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    	<groupId>org.sonarsource.parent</groupId>
+    	<artifactId>parent</artifactId>
+    	<version>23</version>
+  </parent>
+  
+  <groupId>sonar</groupId>
+  <artifactId>sonar-aevbnet-plugin</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>sonar-plugin</packaging>
+
+  <name>sonar.plugin.vbnet</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <sonar.version>4.5.2</sonar.version>
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+    <sonar.pluginName>AE VB Net</sonar.pluginName>
+    <sonar.pluginClass>com.aenetworks.plugin.vbnet.VbNetPlugin</sonar.pluginClass>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.codehaus.sonar</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonarsource.sonar-plugins.dotnet.tests</groupId>
+      <artifactId>sonar-dotnet-tests-library</artifactId>
+      <version>1.2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-plugin-size</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <phase>verify</phase>
+            <configuration>
+              <rules>
+                <requireFilesSize>
+                  <maxsize>9000000</maxsize>
+                  <minsize>8000000</minsize>
+                  <files>
+                    <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                  </files>
+                </requireFilesSize>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
